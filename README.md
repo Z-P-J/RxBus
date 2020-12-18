@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/badge/platform-android-brightgreen.svg)](https://developer.android.com/index.html) [![API](https://img.shields.io/badge/API-19+-blue.svg?style=flat-square)](https://developer.android.com/about/versions/android-4.0.html)[![License](http://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square)](http://www.apache.org/licenses/LICENSE-2.0)
 
-#### Event Bus By RxJava. 使用RxJava实现的EventBus，支持Sticky Event,支持生命周期管理。
+#### Event Bus By RxJava. 使用RxJava实现的事件发布/订阅框架，替代EventBus，支持Sticky Event,支持生命周期管理。
 
 ## 一、安装
 
