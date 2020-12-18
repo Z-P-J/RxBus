@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <TextView
+      android:id="@+id/tv_text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Hello World!"
+      android:layout_gravity="center"
+      />
+
+  <Button
+      android:id="@+id/btn_remove_tag"
+      android:text="移除Tag"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>
+
+  <Button
+      android:id="@+id/btn_send"
+      android:text="发送Event"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal"
+      />
+
+  <Button
+      android:id="@+id/btn_remove_view"
+      android:text="移除View"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="end"
+      />
+
+  <Button
+      android:id="@+id/btn_init"
+      android:text="开始监听"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_horizontal|bottom"
+      />
+
+  <FrameLayout
+      android:id="@+id/fl_fragment"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+
+  </FrameLayout>
+</FrameLayout>
