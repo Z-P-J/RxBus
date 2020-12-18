@@ -130,15 +130,15 @@
     RxBus.observe(object, "Key", String.class, Boolean.class, Double.class)
         .doOnNext(new RxBus.TripleConsumer<String, Boolean, Integer>() {
             @Override
-            public void accept(String s, Boolean b, Integer i) {
-                // 收到信息: s="msg" and b=true and i=100
+            public void accept(String s, Boolean b, Double d) {
+                // 收到信息: s="msg" and b=false and d=100.0
             }
         })
         .subscribe();
     // 发送数据
-    RxBus.post("Key", "msg", true, 100.0);
-	// 注意：发送的以下数据上面的订阅者将接收不到，第三个参数必须是Double类型才能接收到
-	RxBus.post("Key", "msg", true, 100);
+    RxBus.post("Key", "msg", false, 100.0);
+	// 注意：若发送以下数据上面的订阅者将接收不到，第三个参数必须是Double类型才能接收到
+	RxBus.post("Key", "msg", false, 100);
 ```
 
 ### 5. Sticky Event
