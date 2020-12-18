@@ -59,7 +59,7 @@
 ### 2. 订阅和发送Key事件
 
 ```java
-    // 订阅TAG事件
+    // 订阅Key事件
     RxBus.observe(object, "Key")
         .doOnNext(new Consumer<String>() {
             @Override
@@ -68,7 +68,7 @@
             }
         })
         .subscribe();
-    // 发送TAG事件
+    // 发送Key事件
     RxBus.post("Key");
 ```
 
