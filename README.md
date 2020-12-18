@@ -16,7 +16,7 @@
     implementation 'com.zpj.rxbus:RxBus:latest_version'
 
 ```
-## 二、使用（[查看 demo](https://github.com/Z-P-J/RxLife/tree/master/app)）
+## 二、使用（[查看 demo](https://github.com/Z-P-J/RxBus/tree/master/app)）
 
 ### 1. 订阅和发送自定义Event类型事件
 
@@ -68,6 +68,7 @@
             }
         })
         .subscribe();
+
     // 发送Key事件
     RxBus.post("Key");
 ```
@@ -75,68 +76,71 @@
 ### 3. 订阅和发送Key and Event类型事件
 
 ```java
-    // 订阅者1：订阅Key1和Event1类型事件
-    RxBus.observe(object, "Key1", Event1.class)
-        .doOnNext(new Consumer<Event1>() {
+    // 订阅者1：订阅Key1和Boolean类型事件
+    RxBus.observe(object, "Key1", Boolean.class)
+        .doOnNext(new SingleConsumer<Boolean>() {
             @Override
-            public void accept(Event1 event) throws Exception {
+            public void onAccept(Boolean event) throws Exception {
                 // 收到event1
             }
         })
         .subscribe();
 
-    // 订阅者2：订阅Key2和Event1类型事件
-    RxBus.observe(object, "Key2", Event1.class)
-        .doOnNext(new Consumer<Event1>() {
+    // 订阅者2：订阅Key2和Boolean类型事件
+    RxBus.observe(object, "Key2", Boolean.class)
+        .doOnNext(new SingleConsumer<Boolean>() {
             @Override
-            public void accept(Event1 event) throws Exception {
-                // 收到event1
+            public void onAccept(Boolean event) throws Exception {
+                // 收到event
             }
         })
         .subscribe();
 
-    // 订阅者3：订阅Key1和Event2类型事件
-    RxBus.observe(object, "Key1", Event2.class)
-        .doOnNext(new Consumer<Event2>() {
+    // 订阅者3：订阅Key1和Integer类型事件
+    RxBus.observe(object, "Key1", Integer.class)
+        .doOnNext(new SingleConsumer<Integer>() {
             @Override
-            public void accept(Event2 event) throws Exception {
-                // 收到event2
+            public void onAccept(Integer event) throws Exception {
+                // 收到event
             }
         })
         .subscribe();
 
     // 发送Key and Event事件
-    RxBus.post("Key1", new Event1()); // 订阅者1将收到事件
-    RxBus.post("Key2", new Event1()); // 订阅者2将收到事件
-    RxBus.post("Key1", new Event2()); // 订阅者3将收到事件
+    RxBus.post("Key1", true); // 订阅者1将收到事件
+    RxBus.post("Key2", false); // 订阅者2将收到事件
+    RxBus.post("Key1", 1); // 订阅者3将收到事件
 ```
 
-### 4. 传送两或三个参数，减少自定义Event类
+### 4. 传送两个或三个参数，减少自定义Event类
 
 ```java
     // 当我们要同时传送两个参数时我们无需自定义新的Event类，可直接使用以下方法
     RxBus.observe(object, "Key", Boolean.class, Integer.class)
         .doOnNext(new RxBus.PairConsumer<Boolean, Integer>() {
             @Override
-            public void accept(Boolean b, Integer i) {
+            public void onAccept(Boolean b, Integer i) {
                 // 收到信息: b=true and i=100
             }
         })
         .subscribe();
-    // 发送TAG事件
+
+    // 发送Key事件
     RxBus.post("Key", true, 100);
 
 	// 当我们要同时传送三个参数时我们无需自定义新的Event类，可直接使用以下方法
     RxBus.observe(object, "Key", String.class, Boolean.class, Double.class)
         .doOnNext(new RxBus.TripleConsumer<String, Boolean, Integer>() {
             @Override
-            public void accept(String s, Boolean b, Double d) {
+            public void onAccept(String s, Boolean b, Double d) {
                 // 收到信息: s="msg" and b=false and d=100.0
             }
         })
         .subscribe();
+
     // 发送数据
     RxBus.post("Key", "msg", false, 100.0);
+
 	// 注意：若发送以下数据上面的订阅者将接收不到，第三个参数必须是Double类型才能接收到
 	RxBus.post("Key", "msg", false, 100);
 ```
@@ -154,7 +158,7 @@
     // 发送Sticky事件
     RxBus.postSticky(...);
 
-	// 获取Sticky事件
+    // 获取Sticky事件
 	RxBus.getStickyEvent("key");
 	RxBus.getStickyEvent(clazz);
 	RxBus.getStickyEvent("key", clazz);
@@ -166,7 +170,7 @@
 	RxBus.removeAllStickyEvents();
 ```
 
-### 6. 生命周期管理
+### 6. 生命周期管理（[使用RxLife框架实现](https://github.com/Z-P-J/RxLife)）
 
 ```java
     /*
@@ -177,7 +181,7 @@
     RxBus.observe(object1, "Key1", Event1.class)
         .bindTag("TAG1") // 绑定TAG，可根据该TAG移除订阅
         .bindView(bindView) // 绑定View，当View销毁时自动取消订阅
-        .bindToLife(this, Lifecycle.Event.ON_PAUSE) // 绑定Activity/Fragment生命周期
+        .bindToLife(this, Lifecycle.Event.ON_PAUSE) // 绑定Activity/Fragment的onPause生命周期
         .bindToLife(this) // 绑定Activity/Fragment生命周期，默认为onDestroy时移除取消订阅
         .subscribe();
 
@@ -205,10 +209,12 @@
 	// 根据依赖的Object取消订阅
     RxBus.removeObservers(object1); // 订阅者1、订阅者2和订阅者3都会被取消
     RxBus.removeObservers(object2); // 只取消订阅者4
+
 	// 根据TAG取消订阅
     RxBus.removeObservers("TAG1"); // 只取消订阅者1
     RxBus.removeObservers("TAG2"); // 只取消订阅者2
     RxBus.removeObservers("TAG3"); // 将取消订阅者3和订阅者4
+
 	// 根据Key取消订阅
 	RxBus.removeObservers("Key1"); // 将取消订阅者1、订阅者3和订阅者4
     RxBus.removeObservers("Key2"); // 只取消订阅者2
