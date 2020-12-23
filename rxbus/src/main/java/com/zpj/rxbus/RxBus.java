@@ -105,7 +105,7 @@ public final class RxBus {
 
     public static void postSticky(String key, Object o) {
         synchronized (get().mStickyEventMap) {
-            get().mStickyEventMap.put(key, o);
+            get().mStickyEventMap.put(key, new RxMultiEvent(key, o));
         }
         post(o);
     }
