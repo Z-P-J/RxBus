@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -18,21 +17,12 @@ android {
         }
     }
 
-    publish {
-        artifactId = 'RxBus'
-        userOrg = 'z-p-j'
-        groupId = 'com.zpj.rxbus'
-        publishVersion = '1.0.2'
-        desc = 'Event Bus By RxJava.'
-        website = 'https://github.com/Z-P-J/RxBus'
-        licences = ['Apache-2.0']
-    }
 }
 
 dependencies {
     implementation('android.arch.lifecycle:common:1.1.1')
     implementation('io.reactivex.rxjava2:rxjava:2.2.17')
     implementation('io.reactivex.rxjava2:rxandroid:2.1.1')
-    implementation('com.zpj.rxlife:RxLife:1.0.1')
+    implementation 'com.github.Z-P-J:RxLife:1.0.0'
 }
 
