@@ -10,10 +10,10 @@
 ```groovy
     // RxJava2
     implementation 'io.reactivex.rxjava2:rxjava:2.2.17'
-	// RxAndroid
+    // RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    // RxLife
-    implementation 'com.zpj.rxbus:RxBus:latest_version'
+    // RxBus
+    implementation 'com.github.Z-P-J:RxBus:latest_version'
 
 ```
 ## 二、使用（[查看 demo](https://github.com/Z-P-J/RxBus/tree/master/app)）
@@ -141,8 +141,8 @@
     // 发送数据
     RxBus.post("Key", "msg", false, 100.0);
 
-	// 注意：若发送以下数据上面的订阅者将接收不到，第三个参数必须是Double类型才能接收到
-	RxBus.post("Key", "msg", false, 100);
+    // 注意：若发送以下数据上面的订阅者将接收不到，第三个参数必须是Double类型才能接收到
+    RxBus.post("Key", "msg", false, 100);
 ```
 
 ### 5. Sticky Event
@@ -159,15 +159,15 @@
     RxBus.postSticky(...);
 
     // 获取Sticky事件
-	RxBus.getStickyEvent("key");
-	RxBus.getStickyEvent(clazz);
-	RxBus.getStickyEvent("key", clazz);
+    RxBus.getStickyEvent("key");
+    RxBus.getStickyEvent(clazz);
+    RxBus.getStickyEvent("key", clazz);
 
-	// 移除Sticky事件
-	RxBus.removeStickyEvent("key");
-	RxBus.removeStickyEvent(clazz);
-	RxBus.removeStickyEvent("key", clazz);
-	RxBus.removeAllStickyEvents();
+    // 移除Sticky事件
+    RxBus.removeStickyEvent("key");
+    RxBus.removeStickyEvent(clazz);
+    RxBus.removeStickyEvent("key", clazz);
+    RxBus.removeAllStickyEvents();
 ```
 
 ### 6. 生命周期管理（[使用RxLife框架实现](https://github.com/Z-P-J/RxLife)）
